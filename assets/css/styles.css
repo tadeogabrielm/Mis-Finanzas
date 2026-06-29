@@ -1,0 +1,938 @@
+/* =========================================
+   1. Design System & Variables 
+   ========================================= */
+:root {
+    /* Colores Principales */
+    --growth-green: #006D35;
+    --vibrant-mint: #00D16C;
+    --insight-indigo: #4B48D4;
+    --alert-red: #BA1A1A;
+    
+    /* Neutros y Fondos */
+    --clean-white: #FAF8FF;
+    --deep-charcoal: #151829;
+    --surface-white: #FFFFFF;
+    --border-light: #E5E7EB;
+    --text-muted: #666666;
+
+    /* Tipografías */
+    --font-headline: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* =========================================
+   2. Reset Global 
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--clean-white);
+    color: var(--deep-charcoal);
+    /* Mobile-first: Columna simple para el layout general */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Tipografía Base */
+h1, h2, h3, .brand-title {
+    font-family: var(--font-headline);
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+/* =========================================
+   3. Componentes Globales
+   ========================================= */
+.btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: var(--growth-green);
+    color: var(--surface-white);
+}
+
+.btn-primary:hover {
+    background-color: #055e30;
+}
+
+/* Marquesina (Ticker) Dólares */
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 10px 0;
+    margin-bottom: 32px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.ticker {
+    display: inline-block;
+    white-space: nowrap;
+    animation: ticker-scroll 25s linear infinite;
+}
+
+.ticker:hover {
+    animation-play-state: paused;
+}
+
+.ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 32px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--deep-charcoal);
+}
+
+.ticker-item i {
+    font-size: 8px;
+}
+
+.dot-oficial { color: var(--vibrant-mint); }
+.dot-blue { color: #FB8C00; }
+.dot-mep, .dot-ccl { color: #1E88E5; }
+.dot-tarjeta { color: #546E7A; }
+
+@keyframes ticker-scroll {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+}
+
+/* =========================================
+   8. Nav Abanico (Mobile Floating Menu)
+   ========================================= */
+.fab-container {
+    position: fixed;
+    top: 1rem;
+    right: 24px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 16px;
+}
+
+.fab-toggle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--growth-green);
+    color: var(--surface-white);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 109, 53, 0.3);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+}
+
+/* Estado activo del botón principal (Gira y cambia a rojo) */
+.fab-container.open .fab-toggle {
+    transform: rotate(135deg); /* Gira el icono de hamburguesa/cruz */
+    background-color: var(--alert-red);
+    box-shadow: 0 4px 16px rgba(186, 26, 26, 0.3);
+}
+
+.fab-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animación con rebote sutil */
+}
+
+/* Despliegue de los íconos */
+.fab-container.open .fab-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.fab-item {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--growth-green);
+    color: var(--surface-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+.fab-item.active {
+    color: var(--surface-white);
+    border: 2px solid var(--deep-charcoal);
+}
+
+.fab-item:hover {
+    background-color: grey;
+    transform: scale(1.1);
+}
+
+/* =========================================
+   4. Layout Mobile-First
+   ========================================= */
+.sidebar {
+    display: none; /* Oculto en móviles */
+}
+
+.main-content {
+    padding: 24px 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+
+.header-dashboard h2{
+    font-size: 1rem;
+    text-align: center;
+    color: grey;
+    font-style: italic;
+}
+
+/* Buscador (Estilo Pill) */
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: var(--surface-white);
+    border: 1px solid var(--border-light);
+    border-radius: 50px;
+    padding: 12px 24px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 32px auto;
+}
+
+.search-bar i {
+    color: var(--text-muted);
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    width: 100%;
+    margin-left: 12px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    background: transparent;
+    color: var(--deep-charcoal);
+}
+
+
+.card {
+    background: var(--surface-white);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 16px; /* Padding reducido para aprovechar el ancho en celular */
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    font-size: 16px; /* Tipografía optimizada para 2 columnas en mobile */
+    margin: 12px 0 6px 0;
+}
+
+.card p {
+    color: var(--text-muted);
+    font-size: 12px; /* Ajuste tipográfico sutil para celulares */
+    line-height: 1.4;
+}
+
+/* Cajas de Iconos - Proporcionadas para Mobile */
+.icon-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.icon-box.green { background: #E6F4EA; color: var(--growth-green); }
+.icon-box.red { background: #FCE8E8; color: var(--alert-red); }
+.icon-box.violet { background: #E8E8FA; color: var(--insight-indigo); }
+.icon-box.teal { background: #E0F2F1; color: #00897B; }
+.icon-box.gray { background: #ECEFF1; color: #546E7A; }
+.icon-box.orange { background: #FFF3E0; color: #FB8C00; }
+
+/* =========================================
+   5. Footer Principal (Mobile)
+   ========================================= */
+.main-footer {
+    margin-top: auto;
+    padding-top: 24px;
+    margin-bottom: 24px;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.footer-copy p {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--growth-green);
+}
+
+/* =========================================
+   7. Calculadora de Cuotas (Mobile-First)
+   ========================================= */
+
+/* Contenedor centralizado para herramientas */
+.module-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 0;
+}
+
+/* Base Mobile: Tarjeta ocupa todo el ancho, paddings cómodos */
+.calculator-card {
+    width: 100%;
+    max-width: 100%; 
+    padding: 24px 16px;
+    position: relative;
+}
+
+.calculator-card .card-header {
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 16px;
+}
+
+.calculator-card h2 {
+    font-size: 20px;
+    margin-bottom: 4px;
+    text-align: left;
+}
+
+.calculator-card p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin: 0;
+}
+
+/* En mobile, el badge fluye debajo del texto para no pisarlo */
+.badge-wireframe {
+    display: inline-block;
+    margin-top: 12px;
+    background: #F4F7F9;
+    color: var(--text-muted);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Base Mobile: Formulario a 1 columna */
+.calculator-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile: 1 columna, los inputs se apilan */
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--deep-charcoal);
+    display: flex;
+    justify-content: space-between; 
+}
+
+.label-optional {
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: 12px;
+}
+
+/* Diseño corporativo de campos de texto */
+.input-with-icon {
+    display: flex;
+    align-items: center;
+    background: var(--surface-white);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 12px 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efectos visuales de foco con el color de la marca */
+.input-with-icon:focus-within, select.form-control:focus {
+    border-color: var(--growth-green);
+    box-shadow: 0 0 0 3px rgba(0, 109, 53, 0.1);
+}
+
+.input-with-icon i {
+    color: var(--text-muted);
+    margin-right: 12px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.input-with-icon input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--deep-charcoal);
+    background: transparent;
+}
+
+/* Desplegable Select adaptado */
+select.form-control {
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--deep-charcoal);
+    background: var(--surface-white);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 12px 16px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+    
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23666666" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position-x: 96%;
+    background-position-y: center;
+}
+
+.help-text {
+    color: var(--text-muted);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.btn-block {
+    width: 100%;
+    margin-top: 16px;
+    padding: 16px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.calculator-card {
+    cursor: default; /* Cambia la manito por el cursor normal */
+}
+
+.calculator-card:hover {
+    transform: none; /* Evita que la tarjeta salte hacia arriba */
+    box-shadow: none; /* Evita que aparezca la sombra dinámica */
+}
+
+/* =========================================
+   Caja de Resultados (Calculadora)
+   ========================================= */
+.result-box {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px dashed var(--border-light);
+    animation: fadeIn 0.3s ease-in;
+}
+
+.result-box h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: var(--growth-green);
+}
+
+.result-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.result-item strong {
+    font-size: 16px;
+    color: var(--deep-charcoal);
+    font-weight: 600;
+}
+
+.result-item strong.highlight-green {
+    font-size: 20px;
+    color: var(--growth-green);
+}
+
+/* Botón Secundario (Outlined) */
+.btn-secondary {
+    background: transparent;
+    color: var(--deep-charcoal);
+    border: 1px solid var(--border-light);
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: var(--deep-charcoal);
+    border-color: #D1D5DB;
+}
+
+.btn-secondary i {
+    color: #25D366; /* Color de WhatsApp */
+    font-size: 18px;
+}
+
+.module-container .card {
+    cursor: default;
+}
+
+.module-container .card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* =========================================
+   9. Clases Utilitarias y Refactorización
+   ========================================= */
+
+/* Enlaces del Logo (Aplica a todas las páginas) */
+.brand a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* --- Layout Suscripciones --- */
+.subs-container {
+    flex-direction: column;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.subs-title {
+    font-family: var(--font-headline);
+    font-size: 28px;
+    margin-bottom: 4px;
+}
+
+.subs-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Tarjetas de Resumen */
+.card-summary-usd {
+    background-color: var(--clean-white);
+}
+
+.card-summary-ars {
+    background-color: #E6F4EA;
+    border-color: #A3D8B4;
+}
+
+.summary-label {
+    color: var(--text-muted);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.summary-total {
+    font-size: 24px;
+    font-family: var(--font-headline);
+    color: var(--deep-charcoal);
+}
+
+.text-growth-green {
+    color: var(--growth-green) !important;
+}
+
+/* Formularios Compactos */
+.form-label-small {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--deep-charcoal);
+}
+
+.input-sm {
+    padding: 8px 12px;
+}
+
+.input-sm input {
+    font-size: 14px;
+}
+
+select.form-control.select-sm {
+    padding: 8px 12px;
+    font-size: 14px;
+    height: 43px;
+}
+
+.btn-sm-flex {
+    padding: 10px;
+    font-size: 14px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Divisor de Gastos --- */
+.participant-row {
+    margin-bottom: 12px;
+    align-items: center;
+}
+
+.input-flex-1 {
+    flex: 1;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* --- Calculadora de Promociones (Limpieza) --- */
+.promo-alert {
+    background-color: #FFF3E0;
+    border-radius: 6px;
+    border: 1px solid #FFE0B2;
+}
+
+.promo-alert-text {
+    color: #E65100;
+    font-weight: 600;
+}
+
+.text-insight-indigo {
+    color: var(--insight-indigo) !important;
+}
+
+.result-divider {
+    border-top: 1px dashed var(--border-light);
+    margin: 4px 0;
+}
+
+/* =========================================
+   Herramientas
+   ========================================= */
+.tools-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--border-light);
+    overflow-x: auto; /* Para que en mobile se pueda scrollear si hay muchas pestañas */
+    white-space: nowrap;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    padding: 12px 20px;
+    font-family: var(--font-headline);
+    font-size: 16px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px; /* Superpone el borde activo sobre la línea gris */
+}
+
+.tab-btn:hover {
+    color: var(--growth-green);
+    background: #F4F7F9;
+    border-radius: 6px 6px 0 0;
+}
+
+.tab-btn.active {
+    color: var(--growth-green);
+    border-bottom: 3px solid var(--growth-green);
+    font-weight: 700;
+}
+
+.tab-pane {
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Soporte - Ajustes de Acordeón */
+.accordion-button:not(.collapsed) {
+    background-color: #F4F7F9;
+    color: var(--growth-green);
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: var(--border-light);
+}
+
+/* =========================================
+   6. Breakpoint Desktop (Layout Robusto Grid)
+   ========================================= */
+@media (min-width: 922px) {
+    body {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        grid-template-rows: 1fr auto;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .fab-container {
+        display: none;
+    }
+
+    /* --- Sidebar Desktop --- */
+    .sidebar {
+        grid-column: 1;
+        grid-row: 1 / 3;
+        display: flex;
+        flex-direction: column;
+        background: var(--clean-white);
+        border-right: 1px solid var(--border-light);
+        padding: 32px 24px;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    .brand h2, .brand .brand-title {
+    font-size: 20px;
+    color: var(--growth-green);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    margin: 0;
+}
+
+    .dolar-widget {
+        display: block;
+        font-size: 12px;
+        color: var(--text-muted);
+        margin: 4px 0 24px 0;
+    }
+
+    .menu-lateral {
+        margin-top: 32px; /* Aumentamos este valor para separar bien el menú del logo/dólar */
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .menu-lateral a {
+        text-decoration: none;
+        color: var(--text-muted);
+        padding: 12px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+    .menu-lateral a:hover {
+        background: #F4F7F9;
+        color: var(--deep-charcoal);
+    }
+
+    /* Estilo fuerte para la página actual (Calculadora) */
+    .menu-lateral a.active {
+        background: var(--growth-green);
+        color: var(--surface-white); /* Pone tanto el texto como el ícono en blanco */
+        font-weight: 600; /* Le da un poco más de peso para destacar */
+        box-shadow: 0 4px 12px rgba(0, 109, 53, 0.15); /* Una sombra verde sutil */
+    }
+
+    .sidebar-footer {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .sidebar-footer a {
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    /* --- Main Content Desktop --- */
+    .main-content {
+        grid-column: 2;
+        grid-row: 1;
+        padding: 48px;
+        overflow-y: auto;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .ticker-wrap {
+        margin-top: -16px;
+        margin-bottom: 40px;
+    }
+
+    .search-bar {
+        margin-bottom: 48px;
+    }
+
+
+    /* Reajuste de componentes a escala Desktop */
+    .card {
+        padding: 20px;
+    }
+
+    .card h1 {
+        font-size: 2rem;
+        text-align: start;
+    }
+
+    .card h3 {
+        font-size: 18px;
+        margin: 12px 0 8px 0;
+    }
+
+    .card p {
+        font-size: 1rem;
+    }
+
+    .icon-box {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    /* --- Footer Desktop --- */
+    .main-footer {
+        grid-column: 2;
+        grid-row: 2;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+        padding: 24px 48px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+
+
+/* =========================================
+   7. Calculadora de Cuotas (Mobile-First)
+   ========================================= */
+
+
+
+
+    .module-container {
+        margin-top: 16px;
+    }
+
+    /* En escritorio la tarjeta limita su ancho */
+    .calculator-card {
+        max-width: 650px; 
+        padding: 32px;
+    }
+
+    .calculator-card h2 {
+        font-size: 24px;
+    }
+
+    /* El badge sube a la esquina derecha */
+    .badge-wireframe {
+        position: absolute;
+        top: 32px;
+        right: 32px;
+        margin-top: 0;
+    }
+
+    /* Precio y Cuotas se acomodan uno al lado del otro (2 columnas) */
+    .form-row {
+        grid-template-columns: 1fr 1fr; 
+    }
+}

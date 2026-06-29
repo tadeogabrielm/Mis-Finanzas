@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divisor de Gastos - Mis Finanzas</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+
+   <aside class="sidebar">
+        <div class="brand">
+            <a href="../index.html">
+                <h2><i class="fa-solid fa-building-columns"></i> Mis Finanzas</h2>
+            </a>
+            <span class="dolar-widget">Dólar Blue: $1025.00</span>
+        </div>
+        
+        <nav class="menu-lateral">
+            <a href="../secciones/calculadora.html"><i class="fa-solid fa-calculator"></i> Calculadora</a>
+            <a href="../secciones/divisor.html" class="active"><i class="fa-solid fa-users"></i> Divisor</a>
+            <a href="../secciones/suscripciones.html"><i class="fa-solid fa-file-invoice-dollar"></i> Suscripciones</a>
+            <a href="../secciones/promociones.html"><i class="fa-solid fa-percent"></i> Promociones</a>
+            <a href="../secciones/dolar.html"><i class="fa-solid fa-money-bill-transfer"></i> Dólar</a>
+            <a href="../secciones/herramientas.html"><i class="fa-solid fa-chart-line"></i> Herramientas</a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="#"><i class="fa-solid fa-rotate"></i>V 1.7.2</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <section class="module-container">
+            <div class="calculator-card card">
+                
+                <div class="card-header">
+                    <h1>Divisor de Gastos</h1>
+                    <p>Calculá cuánto le toca poner a cada uno.</p>
+                </div>
+
+                <form class="calculator-form" id="divisorForm">
+                    <div class="form-group">
+                        <label>Motivo de la Juntada <span class="label-optional">Opcional</span></label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-burger"></i>
+                            <input type="text" id="motivoGasto" placeholder="Ej: Cena en Dean & Dennys">
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="participantsContainer">
+                        <label>Participantes y Gastos</label>
+                        
+                        <div class="form-row participant-row">
+                            <div class="input-with-icon input-flex-1">
+                                <i class="fa-solid fa-user"></i>
+                                <input type="text" class="part-name" placeholder="Nombre (Ej: Yo)" value="Yo">
+                            </div>
+                            <div class="input-with-icon input-flex-1">
+                                <i>$</i>
+                                <input type="text" inputmode="numeric" class="part-amount form-control-monto" placeholder="Puso 0">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row participant-row">
+                            <div class="input-with-icon input-flex-1">
+                                <i class="fa-solid fa-user"></i>
+                                <input type="text" class="part-name" placeholder="Nombre (Ej: Juan)">
+                            </div>
+                            <div class="input-with-icon input-flex-1">
+                                <i>$</i>
+                                <input type="text" inputmode="numeric" class="part-amount form-control-monto" placeholder="Puso 0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" id="btnAddPerson" class="btn btn-secondary mb-2">
+                        <i class="fa-solid fa-plus"></i> Sumar persona
+                    </button>
+
+                    <button type="button" id="btnDividir" class="btn btn-primary btn-block">
+                        <i class="fa-solid fa-bolt"></i> Calcular Transferencias
+                    </button>
+                </form>
+
+                <div id="resultadoDivisor" class="result-box" style="display: none;">
+                    <h2>Liquidación de Gastos</h2>
+                    <div class="result-grid mb-3">
+                        <div class="result-item">
+                            <span>Gasto Total</span>
+                            <strong id="resTotalCuenta">$0.00</strong>
+                        </div>
+                        <div class="result-item">
+                            <span>Costo por Persona (La cuota)</span>
+                            <strong id="resPorPersona">$0.00</strong>
+                        </div>
+                    </div>
+                    
+                    <div id="transferList" class="mb-4"></div>
+                    
+                    <button type="button" class="btn btn-secondary btn-block" onclick="compartirWhatsAppDivisor()">
+                        <i class="fa-brands fa-whatsapp"></i> Mandar Resumen al grupo
+                    </button>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <div class="fab-container" id="fabContainer">
+        <div class="fab-menu">
+            <a href="../secciones/herramientas.html" class="fab-item" title="Herramientas"><i class="fa-solid fa-chart-line"></i></a>
+            <a href="../secciones/dolar.html" class="fab-item" title="Dólar"><i class="fa-solid fa-money-bill-transfer"></i></a>
+            <a href="../secciones/suscripciones.html" class="fab-item" title="Suscripciones"><i class="fa-solid fa-file-invoice-dollar"></i></a>
+            <a href="../secciones/promociones.html" class="fab-item" title="Promociones"><i class="fa-solid fa-percent"></i></a>
+            <a href="../secciones/divisor.html" class="fab-item active" title="Divisor"><i class="fa-solid fa-users"></i></a>
+            <a href="../secciones/calculadora.html" class="fab-item" title="Calculadora"><i class="fa-solid fa-calculator"></i></a>
+            <a href="../index.html" class="fab-item" title="Inicio"><i class="fa-solid fa-house"></i></a>
+        </div>
+        
+        <button class="fab-toggle" id="fabToggle">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-copy">
+            <p>&copy; 2026 Mis Finanzas - Datos de BCRA y Fuentes Públicas</p>
+        </div>
+        <nav class="footer-links">
+            <a href="soporte.html">Soporte</a>
+            <a href="about.html">About</a>
+        </nav>
+    </footer>
+
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/dolar.js"></script>
+<script src="../assets/js/divisor.js"></script>
+</body>
+</html>
